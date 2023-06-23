@@ -1,23 +1,32 @@
 from fastapi import APIRouter
+from config.db import client
+from schemas.site import siteEntity, sitesEntity
+from models.site import Site
 
 site = APIRouter()
 
 
 @site.get("/sites")
 def find_all_sites():
-    return "All sites!"
+    return sitesEntity(client.local.site.find())
+
 
 @site.post("/sites")
-def create_site():
+def create_site(site: Site):
+    new_site = dict(site)
+    client.local.site.insert_one(new_site).inserted_id
     return "Site created!"
+
 
 @site.get("/sites/{id}")
 def find_site():
     return "One site!"
 
+
 @site.put("/sites/{id}")
 def update_site():
     return "Site updated!"
+
 
 @site.delete("/sites/{id}")
 def delete_site():

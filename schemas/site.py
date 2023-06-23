@@ -1,6 +1,6 @@
-def siteEntity(item)->dict:
+def siteEntity(item) -> dict:
     return {
-        "id": item["id"],
+        "id": str(item["_id"]),
         "code": item["code"],
         "name": item["name"],
         "subproject": item["subproject"],
@@ -12,3 +12,7 @@ def siteEntity(item)->dict:
         "district": item["district"],
         "site_address": item["site_address"],
     }
+
+
+def sitesEntity(entity) -> list:
+    return [siteEntity(item) for item in entity]
