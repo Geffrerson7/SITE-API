@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from config.db import client
 from schemas.site import siteEntity, sitesEntity
 from models.site import Site
+from bson import ObjectId
 
 site = APIRouter()
 
@@ -19,8 +20,8 @@ def create_site(site: Site):
 
 
 @site.get("/sites/{id}")
-def find_site():
-    return "One site!"
+def find_site(id:str):
+    return siteEntity(client.local.site.find_one({"_id": ObjectId(id)}))
 
 
 @site.put("/sites/{id}")
