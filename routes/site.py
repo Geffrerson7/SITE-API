@@ -5,6 +5,7 @@ from models.site import Site
 from bson import ObjectId
 from starlette.status import HTTP_204_NO_CONTENT, HTTP_404_NOT_FOUND, HTTP_201_CREATED
 
+
 site = APIRouter()
 
 
@@ -76,3 +77,9 @@ def delete_site(id: str):
             )
     except Exception as e:
         return {"error": str(e)}
+
+
+@site.get("/")
+def root():
+    return {"message": "Welcome to the Telecommunications Sites API!"}
+
