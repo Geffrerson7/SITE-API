@@ -9,9 +9,16 @@ site = APIRouter()
 
 
 @site.get("/sites")
-def find_all_sites():
-    return {"data": sitesEntity(client.local.site.find())}
-
+def find_all_sites(skip: int = 0, limit: int = 10):
+    total_sites = client.local.site.count_documents({})
+    sites = client.local.site.find().skip(skip).limit(limit)
+    return {
+        "data": sitesEntity(sites),
+        "total_sites": total_sites,
+        "skip": skip,
+        "limit": limit,
+        "next_skip": skip + limit  
+    }
 
 @site.post("/sites")
 def create_site(site: Site):
