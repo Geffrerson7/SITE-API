@@ -10,7 +10,7 @@ site = APIRouter()
 
 @site.get("/sites")
 def find_all_sites():
-    return sitesEntity(client.local.site.find())
+    return {"data": sitesEntity(client.local.site.find())}
 
 
 @site.post("/sites")
@@ -21,16 +21,23 @@ def create_site(site: Site):
 
 
 @site.get("/sites/{id}")
-def find_site(id:str):
+def find_site(id: str):
     site = client.local.site.find_one({"_id": ObjectId(id)})
     if site:
         return siteEntity(site)
     else:
         raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail="Site not found!")
 
+
 @site.put("/sites/{id}")
-def update_site():
-    return "Site updated!"
+def update_site(id: str, site: Site):
+    updated_site = client.local.site.find_one_and_update(
+        {"_id": ObjectId(id)}, {"$set": dict(site)}, return_document=True
+    )
+    if updated_site:
+        return {"data": siteEntity(updated_site), "message": "Site updated!"}
+    else:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail="Site not found!")
 
 
 @site.delete("/sites/{id}")
