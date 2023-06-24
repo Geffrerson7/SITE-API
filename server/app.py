@@ -1,8 +1,23 @@
 from fastapi import FastAPI
 from routes.site import site
 from fastapi.openapi.utils import get_openapi
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def custom_openapi():
@@ -13,7 +28,7 @@ def custom_openapi():
         version="1.0.0",
         description="API to create telecommunications antennas sites",
         terms_of_service="https://policies.google.com/terms",
-        contact={"name":"Gefferson Casasola", "email": "gefferson.casasola@gmail.com"},
+        contact={"name": "Gefferson Casasola", "email": "gefferson.casasola@gmail.com"},
         license_info={"name": "MIT License"},
         routes=app.routes,
     )
