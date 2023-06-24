@@ -75,7 +75,6 @@ http://127.0.0.1:8000/
 * **Python** (v. 3.11.2) [Source](https://www.python.org/)
 * **fastAPI** (v. 0.97.0)  [Source](https://fastapi.tiangolo.com/)
 * **uvicorn** (v. 3.14.0) [Source](https://www.uvicorn.org/)
-* **django-cors-headers** (v. 0.22.0) [Source](https://pypi.org/project/django-cors-headers/)
 * **pymongo** (v. 4.4.0) [Source](https://pymongo.readthedocs.io/en/stable/)
 * **pydantic** (v. 1.21.5) [Source](https://docs.pydantic.dev/latest/)
 * **openapi** (v. 3.0.2) [Source](https://spec.openapis.org/oas/v3.0.2)
