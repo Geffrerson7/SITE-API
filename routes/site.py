@@ -1,8 +1,9 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Response, HTTPException
 from config.db import client
 from schemas.site import siteEntity, sitesEntity
 from models.site import Site
 from bson import ObjectId
+from starlette.status import HTTP_204_NO_CONTENT, HTTP_404_NOT_FOUND, HTTP_201_CREATED
 
 site = APIRouter()
 
@@ -16,13 +17,16 @@ def find_all_sites():
 def create_site(site: Site):
     new_site = dict(site)
     client.local.site.insert_one(new_site).inserted_id
-    return "Site created!"
+    return Response(status_code=HTTP_201_CREATED, content="Site created!")
 
 
 @site.get("/sites/{id}")
 def find_site(id:str):
-    return siteEntity(client.local.site.find_one({"_id": ObjectId(id)}))
-
+    site = client.local.site.find_one({"_id": ObjectId(id)})
+    if site:
+        return siteEntity(site)
+    else:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail="Site not found!")
 
 @site.put("/sites/{id}")
 def update_site():
@@ -30,5 +34,9 @@ def update_site():
 
 
 @site.delete("/sites/{id}")
-def delete_site():
-    return "Site deleted!"
+def delete_site(id: str):
+    deleted_site = client.local.site.find_one_and_delete({"_id": ObjectId(id)})
+    if deleted_site:
+        return Response(status_code=HTTP_204_NO_CONTENT, content="Site deleted!")
+    else:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail="Site not found!")
