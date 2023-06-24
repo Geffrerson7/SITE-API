@@ -1,3 +1,5 @@
 from pymongo import MongoClient
+import os
 
-client = MongoClient()
+client = MongoClient(os.environ.get("DATABASE_URI"))
+
