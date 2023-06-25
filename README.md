@@ -78,6 +78,7 @@ http://127.0.0.1:8000/
 * **pymongo** (v. 4.4.0) [Source](https://pymongo.readthedocs.io/en/stable/)
 * **pydantic** (v. 1.21.5) [Source](https://docs.pydantic.dev/latest/)
 * **openapi** (v. 3.0.2) [Source](https://spec.openapis.org/oas/v3.0.2)
+* **python-multipart** (v. 0.0.6) [Source](https://pypi.org/project/python-multipart/)
 
 
 ## Author
